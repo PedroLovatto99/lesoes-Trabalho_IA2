@@ -152,7 +152,7 @@ ax[1].set_xlabel('k')
 ax[1].set_ylabel('Silhouette')
 plt.tight_layout()
 plt.savefig(os.path.join(DIR_IMG, 'cotovelo_silhouette.png'), dpi=150)
-plt.show()
+plt.show(block=False)
 
 print("\nSilhouette score por k:")
 for k, s in zip(k_range, silhouettes):
@@ -186,11 +186,6 @@ perfil = jogadores_df.groupby('cluster')[colunas_perfil].mean().round(1)
 perfil['n_jogadores'] = jogadores_df.groupby('cluster').size()
 print(perfil)
 
-fig, ax = plt.subplots(figsize=(7, 4))
-tamanhos = jogadores_df['cluster'].value_counts().sort_index()
-ax.bar(tamanhos.index.astype(str), tamanhos.values, color='steelblue')
-ax.set_xlabel('Cluster')
-ax.set_ylabel('Número de jogadores')
-ax.set_title(f'Tamanho de cada cluster (k={K_ESCOLHIDO})')
-plt.savefig(os.path.join(DIR_IMG, 'tamanho_clusters.png'), dpi=150)
+# mantem a janela do grafico aberta ate o usuario fecha-la, agora que
+# todo o resultado ja foi impresso no terminal
 plt.show()
