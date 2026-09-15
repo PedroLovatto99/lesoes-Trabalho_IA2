@@ -75,7 +75,17 @@ def categoria_lesao(texto):
 df['categoria_lesao'] = df['injury_lower'].apply(categoria_lesao)
 print("\nDistribuição por categoria de lesão:")
 print(df['categoria_lesao'].value_counts())
-
+fig, ax = plt.subplots(figsize=(7,4))
+contagem = df['categoria_lesao'].value_counts()
+cores_cat = {'Muscular':'#dd8452', 'Articular/ligamentar':'#4c72b0', 'Outras':'#8c8c8c', 'Óssea':'#c44e52'}
+ax.bar(contagem.index, contagem.values, color=[cores_cat[c] for c in contagem.index], edgecolor='black')
+ax.set_title('Distribuição por categoria de lesão')
+ax.set_ylabel('Nº de registros')
+for i, v in enumerate(contagem.values):
+    ax.text(i, v+80, str(v), ha='center', fontsize=9)
+plt.tight_layout()
+plt.savefig(os.path.join(DIR_IMG, 'barras_categoria_lesao.png'), dpi=150)
+plt.show(block=False)
 
 # =============================================================================
 # 4. Construcao das features por jogador (agregacao)
@@ -189,3 +199,4 @@ print(perfil)
 # mantem a janela do grafico aberta ate o usuario fecha-la, agora que
 # todo o resultado ja foi impresso no terminal
 plt.show()
+
